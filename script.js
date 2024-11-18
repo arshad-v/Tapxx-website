@@ -125,72 +125,40 @@ document.querySelectorAll('.feature-card, .product-card, .pricing-card, .step').
     observer.observe(element);
 });
 
-// Scroll reveal animation
-function reveal() {
-    var reveals = document.querySelectorAll('section');
+// Mobile menu setup
+function setupMobileMenu() {
+    const menuButton = document.createElement('button');
+    menuButton.classList.add('mobile-menu-button');
+    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
     
-    reveals.forEach(element => {
-        var windowHeight = window.innerHeight;
-        var elementTop = element.getBoundingClientRect().top;
-        var elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-            element.style.opacity = "1";
-            element.style.transform = "translateY(0)";
+    const nav = document.querySelector('nav .container');
+    const navLinks = document.querySelector('.nav-links');
+    
+    nav.insertBefore(menuButton, navLinks);
+    
+    menuButton.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        menuButton.innerHTML = navLinks.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
         }
     });
+
+    // Close menu when clicking on a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+    });
 }
 
-// Initialize animations
-document.addEventListener('DOMContentLoaded', function() {
-    // Set initial state for sections
-    document.querySelectorAll('section').forEach(section => {
-        section.style.opacity = "0";
-        section.style.transform = "translateY(20px)";
-        section.style.transition = "all 0.8s ease-out";
-    });
-
-    // Run reveal on load
-    reveal();
-});
-
-// Add scroll event listener
-window.addEventListener('scroll', reveal);
-
-// Mobile Menu Setup
-const hamburger = document.querySelector('.hamburger');
-const mobileMenu = document.querySelector('.mobile-menu');
-const body = document.body;
-
-function toggleMenu() {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-}
-
-hamburger.addEventListener('click', toggleMenu);
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.mobile-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        body.style.overflow = '';
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (mobileMenu.classList.contains('active') && 
-        !mobileMenu.contains(e.target) && 
-        !hamburger.contains(e.target)) {
-        toggleMenu();
-    }
-});
-
-// Close mobile menu on resize if open
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
-        toggleMenu();
-    }
-});
+// Call setup function when DOM is loaded
+document.addEventListener('DOMContentLoaded', setupMobileMenu);
