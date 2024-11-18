@@ -125,6 +125,38 @@ document.querySelectorAll('.feature-card, .product-card, .pricing-card, .step').
     observer.observe(element);
 });
 
+// Scroll reveal animation
+function reveal() {
+    var reveals = document.querySelectorAll('section');
+    
+    reveals.forEach(element => {
+        var windowHeight = window.innerHeight;
+        var elementTop = element.getBoundingClientRect().top;
+        var elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+            element.style.opacity = "1";
+            element.style.transform = "translateY(0)";
+        }
+    });
+}
+
+// Initialize animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Set initial state for sections
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = "0";
+        section.style.transform = "translateY(20px)";
+        section.style.transition = "all 0.8s ease-out";
+    });
+
+    // Run reveal on load
+    reveal();
+});
+
+// Add scroll event listener
+window.addEventListener('scroll', reveal);
+
 // Mobile menu setup
 function setupMobileMenu() {
     const menuButton = document.createElement('button');
@@ -162,3 +194,29 @@ function setupMobileMenu() {
 
 // Call setup function when DOM is loaded
 document.addEventListener('DOMContentLoaded', setupMobileMenu);
+
+// Mobile Menu Functionality
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+});
+
+// Close mobile menu when clicking a link
+mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
