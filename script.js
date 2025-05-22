@@ -162,3 +162,37 @@ function setupMobileMenu() {
 
 // Call setup function when DOM is loaded
 document.addEventListener('DOMContentLoaded', setupMobileMenu);
+
+// Theme Toggle Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    if (themeToggleButton) {
+        // 1. Check for Saved Preference on Load
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for dark mode
+        } else {
+            // Default to light mode (or if savedTheme is 'light')
+            body.classList.remove('dark-mode'); // Ensure it's not there if saved as light
+            themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for light mode
+        }
+
+        // Attach click event listener
+        themeToggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            // Update icon and save preference
+            if (body.classList.contains('dark-mode')) {
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark'); // 2. Save Preference on Toggle
+            } else {
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light'); // 2. Save Preference on Toggle
+            }
+        });
+    }
+});
