@@ -8,7 +8,9 @@
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-color); /* USE VARIABLE */
+    background-color: var(--background); /* USE VARIABLE & add transition */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -17,14 +19,77 @@ body {
     padding: 0 20px;
 }
 
-/* Brand Colors */
+/* Brand Colors & Theme Variables */
 :root {
-    --color-green: #4CAF50;
+    /* Light Theme (Default) */
+    --background: #fff;
+    --text-color: #333;
+    --heading-color: #333;
+    --paragraph-color: #666;
+    --nav-bg: #fff;
+    --nav-text-color: #333;
+    --card-bg: #fff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --hero-bg: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    --section-bg-light: #f5f7fa;
+    --section-bg-lighter: #f9f9f9;
+    --primary-button-bg: #4CAF50;
+    --primary-button-text: white;
+    --primary-button-hover-bg: #3e8e41;
+    --secondary-button-border: #4CAF50;
+    --secondary-button-text: #4CAF50;
+    --secondary-button-hover-bg: #4CAF50;
+    --secondary-button-hover-text: white;
+    --footer-bg: #333;
+    --footer-text: #fff;
+    --footer-link-hover: #4CAF50;
+    --border-color: #ddd;
+    --icon-color: #4CAF50; 
+    --logo-tap-blue: #0066ff;
+    --logo-xx-orange: #ff6600;
+    --whatsapp-bg: #25D366;
+    --whatsapp-text: white;
+    --whatsapp-hover-bg: #22c55e;
+
+    --color-green-ref: #4CAF50; /* Original --color-green for reference */
+}
+
+body.dark-mode {
+    --background: #121212;
+    --text-color: #e0e0e0;
+    --heading-color: #e0e0e0;
+    --paragraph-color: #b0b0b0;
+    --nav-bg: #1e1e1e;
+    --nav-text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --hero-bg: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    --section-bg-light: #1a1a1a;
+    --section-bg-lighter: #161616;
+    --primary-button-bg: #bb86fc; /* Purple */
+    --primary-button-text: #121212;
+    --primary-button-hover-bg: #a76fec;
+    --secondary-button-border: #03dac6; /* Teal */
+    --secondary-button-text: #03dac6;
+    --secondary-button-hover-bg: #03dac6;
+    --secondary-button-hover-text: #121212;
+    --footer-bg: #1a1a1a;
+    --footer-text: #e0e0e0;
+    --footer-link-hover: #bb86fc; /* Purple */
+    --border-color: #333333;
+    --icon-color: #bb86fc; /* Purple for icons in dark mode */
+    /* Brand colors can be kept or adjusted. For now, using :root definitions */
+    /* --logo-tap-blue: #3F9EFF; */ 
+    /* --logo-xx-orange: #FF8C3D; */
+    --whatsapp-bg: #25D366; 
+    --whatsapp-text: white;
+    --whatsapp-hover-bg: #22c55e;
 }
 
 /* Typography */
 h1, h2, h3 {
     margin-bottom: 1rem;
+    color: var(--heading-color); /* USE VARIABLE */
 }
 
 h2 {
@@ -35,8 +100,8 @@ h2 {
 
 /* Navigation */
 nav {
-    background: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: var(--nav-bg); /* USE VARIABLE */
+    box-shadow: 0 2px 10px var(--card-shadow); /* USE VARIABLE */
     position: fixed;
     width: 100%;
     top: 0;
@@ -56,26 +121,53 @@ nav .container {
 }
 .logo h1 .tap-blue,
 .tap-blue {
-    color: #0066ff !important;
+    color: var(--logo-tap-blue) !important; /* USE VARIABLE */
+}
+.logo h1 .xx-orange, /* ADDED FOR COMPLETENESS */
+.xx-orange {
+    color: var(--logo-xx-orange) !important; /* USE VARIABLE */
 }
 
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem; /* Adjusted for theme button */
     transition: all 0.3s ease;
+    align-items: center; /* For theme button alignment */
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #333;
+    color: var(--nav-text-color); /* USE VARIABLE */
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE for themed hover */
+}
+
+/* Theme Toggle Button Styles */
+.theme-button {
+    background: transparent;
+    border: none;
+    color: var(--nav-text-color); /* USE VARIABLE */
+    font-size: 1.2rem; 
+    cursor: pointer;
+    padding: 0.5rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.theme-button:hover {
+    color: var(--icon-color); /* USE VARIABLE for themed hover */
+}
+
+.theme-button i { 
+    transition: inherit; 
 }
 
 /* Mobile Menu Styles */
@@ -84,13 +176,13 @@ nav .container {
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: #333;
+    color: var(--nav-text-color); /* USE VARIABLE */
     cursor: pointer;
     padding: 0.5rem;
 }
 
 /* Buttons */
-.primary-button, .secondary-button {
+.primary-button, .secondary-button, .cta-button { /* Ensure .cta-button is included for general styling */
     display: inline-block;
     padding: 12px 30px;
     border-radius: 30px;
@@ -100,33 +192,47 @@ nav .container {
 }
 
 .primary-button {
-    background: #4CAF50;
-    color: white;
+    background: var(--primary-button-bg); /* USE VARIABLE */
+    color: var(--primary-button-text); /* USE VARIABLE */
     border: none;
 }
 
 .primary-button:hover {
-    background: #3e8e41;
+    background: var(--primary-button-hover-bg); /* USE VARIABLE */
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE for consistent shadow */
 }
 
 .secondary-button {
-    border: 2px solid #4CAF50;
-    color: #4CAF50;
+    border: 2px solid var(--secondary-button-border); /* USE VARIABLE */
+    color: var(--secondary-button-text); /* USE VARIABLE */
     margin-left: 1rem;
 }
 
 .secondary-button:hover {
-    background: #4CAF50;
-    color: white;
+    background: var(--secondary-button-hover-bg); /* USE VARIABLE */
+    color: var(--secondary-button-hover-text); /* USE VARIABLE */
     transform: translateY(-2px);
 }
+
+/* Special handling for .cta-button within nav-links if it's different from general .primary-button */
+/* This ensures the nav CTA button also gets themed correctly. */
+.nav-links .cta-button {
+    background: var(--primary-button-bg);
+    color: var(--primary-button-text) !important; /* !important to override general 'a' color if needed */
+    padding: 10px 25px; /* Keep its specific padding or use general button padding */
+}
+
+.nav-links .cta-button:hover {
+    background: var(--primary-button-hover-bg);
+    color: var(--primary-button-text) !important; /* Ensure hover text color is consistent */
+}
+
 
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    background: var(--hero-bg); /* USE VARIABLE */
 }
 
 .hero .container {
@@ -141,19 +247,20 @@ nav .container {
     font-weight: 700;
     margin-bottom: 1.5rem;
     line-height: 1.2;
+    /* Heading color is already set by general h1, h2, h3 rule */
 }
 
-.hero-content h1 .brand-black {
-    color: #333;
+.hero-content h1 .brand-black { /* This class might be unnecessary if direct brand colors are used */
+    color: var(--heading-color); /* Or specific brand color if intended */
 }
 
-.hero-content h1 .brand-green {
-    color: #4CAF50;
+.hero-content h1 .brand-green { /* This class might be unnecessary or use --icon-color */
+    color: var(--icon-color); /* Using themed accent color */
 }
 
 .hero-content p {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--paragraph-color); /* USE VARIABLE */
     margin-bottom: 2rem;
 }
 
@@ -166,7 +273,7 @@ nav .container {
 /* Features Section */
 .features {
     padding: 80px 0;
-    background: #fff;
+    background: var(--background); /* USE VARIABLE - or section specific like --section-bg-light */
 }
 
 .features-grid {
@@ -187,19 +294,19 @@ nav .container {
     text-align: center;
     padding: 2rem;
     border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: var(--card-bg); /* USE VARIABLE */
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
     transition: all 0.3s ease;
 }
 
 .feature-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px var(--card-shadow); /* USE VARIABLE - slightly more pronounced */
 }
 
 .feature-card i {
     font-size: 2.5rem;
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE */
     margin-bottom: 1rem;
     transition: transform 0.3s ease;
 }
@@ -211,7 +318,7 @@ nav .container {
 /* Products Section */
 .products {
     padding: 80px 0;
-    background: #f5f7fa;
+    background: var(--section-bg-light); /* USE VARIABLE */
 }
 
 .product-grid {
@@ -221,11 +328,11 @@ nav .container {
 }
 
 .product-card {
-    background: #fff;
+    background: var(--card-bg); /* USE VARIABLE */
     border-radius: 10px;
     padding: 2rem;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
     transition: transform 0.3s ease;
 }
 
@@ -253,7 +360,7 @@ nav .container {
 
 .product-card ul li:before {
     content: "✓";
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE */
     position: absolute;
     left: 0;
 }
@@ -261,17 +368,17 @@ nav .container {
 /* Pricing Section */
 .pricing {
     padding: 80px 0;
-    background: #fff;
+    background: var(--background); /* USE VARIABLE - or --section-bg-lighter */
 }
 
-.pricing h2 {
+.pricing h2 { /* Themed by general h2 */
     text-align: center;
     margin-bottom: 1rem;
 }
 
 .pricing-subtitle {
     text-align: center;
-    color: #666;
+    color: var(--paragraph-color); /* USE VARIABLE */
     font-size: 1.1rem;
     margin-bottom: 3rem;
 }
@@ -291,16 +398,16 @@ nav .container {
 }
 
 .pricing-card {
-    background: #fff;
+    background: var(--card-bg); /* USE VARIABLE */
     border-radius: 10px;
     padding: 2rem;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
     transition: transform 0.3s ease;
 }
 
 .pricing-card.featured {
-    border: 2px solid #4CAF50;
+    border: 2px solid var(--primary-button-bg); /* USE VARIABLE for themed accent */
     transform: scale(1.05);
 }
 
@@ -311,7 +418,7 @@ nav .container {
 .pricing-card .price {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #4CAF50;
+    color: var(--primary-button-bg); /* USE VARIABLE for themed accent */
     margin: 1rem 0;
     font-family: 'Poppins', sans-serif;
 }
@@ -332,7 +439,7 @@ nav .container {
 /* How It Works Section */
 .how-it-works {
     padding: 80px 0;
-    background: #f5f7fa;
+    background: var(--section-bg-light); /* USE VARIABLE */
 }
 
 .steps-grid {
@@ -344,13 +451,14 @@ nav .container {
 .step {
     text-align: center;
     padding: 2rem;
+    /* Text color for h3 and p inside .step will be inherited or can be set if needed */
 }
 
 .step-number {
     width: 50px;
     height: 50px;
-    background: #4CAF50;
-    color: white;
+    background: var(--primary-button-bg); /* USE VARIABLE for themed accent */
+    color: var(--primary-button-text); /* USE VARIABLE for text on accent */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -362,13 +470,12 @@ nav .container {
 /* Contact Section */
 .contact {
     padding: 80px 0;
-    background-color: #f9f9f9;
+    background-color: var(--section-bg-lighter); /* USE VARIABLE */
 }
 
-.contact h2 {
+.contact h2 { /* Themed by general h2 */
     text-align: center;
     margin-bottom: 2rem;
-    color: #333;
 }
 
 .contact-center {
@@ -379,7 +486,7 @@ nav .container {
 
 .contact-text {
     font-size: 1.2rem;
-    color: #666;
+    color: var(--paragraph-color); /* USE VARIABLE */
     margin-bottom: 2rem;
 }
 
@@ -388,20 +495,20 @@ nav .container {
     align-items: center;
     justify-content: center;
     padding: 15px 30px;
-    background-color: #25D366;
-    color: white;
+    background-color: var(--whatsapp-bg); /* USE VARIABLE */
+    color: var(--whatsapp-text); /* USE VARIABLE */
     border-radius: 30px;
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+    box-shadow: 0 4px 15px var(--card-shadow); /* USE VARIABLE - adjust opacity if needed for brand color */
 }
 
 .whatsapp-button:hover {
-    background-color: #22c55e;
+    background-color: var(--whatsapp-hover-bg); /* USE VARIABLE */
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+    box-shadow: 0 6px 20px var(--card-shadow); /* USE VARIABLE */
 }
 
 .whatsapp-button i {
@@ -427,14 +534,13 @@ nav .container {
 
 /* Reviews Importance Section */
 .reviews-importance {
-    background-color: #f9f9f9;
+    background-color: var(--section-bg-lighter); /* USE VARIABLE */
     padding: 80px 0;
 }
 
-.reviews-importance h2 {
+.reviews-importance h2 { /* Themed by general h2 */
     text-align: center;
     margin-bottom: 3rem;
-    color: #333;
 }
 
 .stats-grid {
@@ -445,11 +551,11 @@ nav .container {
 }
 
 .stat-card {
-    background: white;
+    background: var(--card-bg); /* USE VARIABLE */
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
     transition: transform 0.3s ease;
 }
 
@@ -459,33 +565,31 @@ nav .container {
 
 .stat-card i {
     font-size: 2.5rem;
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE */
     margin-bottom: 1rem;
 }
 
-.stat-card h3 {
-    color: #333;
+.stat-card h3 { /* Themed by general h3 */
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
-.stat-card p {
-    color: #666;
+.stat-card p { /* Themed by general p, but paragraph-color is more specific */
+    color: var(--paragraph-color); /* USE VARIABLE */
     line-height: 1.6;
 }
 
 .benefits-list {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
+    background: var(--card-bg); /* USE VARIABLE */
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
 }
 
-.benefits-list h3 {
+.benefits-list h3 { /* Themed by general h3 */
     text-align: center;
-    color: #333;
     margin-bottom: 2rem;
 }
 
@@ -498,12 +602,12 @@ nav .container {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    color: #666;
+    color: var(--paragraph-color); /* USE VARIABLE */
     font-size: 1.1rem;
 }
 
 .benefits-list li i {
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE */
     margin-right: 1rem;
     font-size: 1.2rem;
 }
@@ -511,13 +615,12 @@ nav .container {
 /* Business Benefits Section */
 .business-benefits {
     padding: 80px 0;
-    background-color: #f9f9f9;
+    background-color: var(--section-bg-lighter); /* USE VARIABLE */
 }
 
-.business-benefits h2 {
+.business-benefits h2 { /* Themed by general h2 */
     text-align: center;
     margin-bottom: 3rem;
-    color: #333;
 }
 
 .benefits-grid {
@@ -528,11 +631,11 @@ nav .container {
 }
 
 .benefit-card {
-    background: white;
+    background: var(--card-bg); /* USE VARIABLE */
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
     transition: transform 0.3s ease;
 }
 
@@ -542,17 +645,16 @@ nav .container {
 
 .benefit-card i {
     font-size: 2.5rem;
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE */
     margin-bottom: 1.5rem;
 }
 
-.benefit-card h3 {
-    color: #333;
+.benefit-card h3 { /* Themed by general h3 */
     margin-bottom: 1rem;
 }
 
-.benefit-card p {
-    color: #666;
+.benefit-card p { /* Themed by general p or paragraph-color */
+    color: var(--paragraph-color); /* USE VARIABLE */
     line-height: 1.6;
 }
 
@@ -566,36 +668,35 @@ nav .container {
 
 .stat-item {
     padding: 2rem;
-    background: white;
+    background: var(--card-bg); /* USE VARIABLE */
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
 }
 
 .stat-number {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE for themed accent */
     margin-bottom: 1rem;
     display: block;
 }
 
 .stat-item p {
-    color: #666;
+    color: var(--paragraph-color); /* USE VARIABLE */
     font-size: 1.1rem;
 }
 
 .key-points {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
+    background: var(--card-bg); /* USE VARIABLE */
     padding: 3rem;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px var(--card-shadow); /* USE VARIABLE */
 }
 
-.key-points h3 {
+.key-points h3 { /* Themed by general h3 */
     text-align: center;
-    color: #333;
     margin-bottom: 2rem;
 }
 
@@ -608,12 +709,12 @@ nav .container {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    color: #666;
+    color: var(--paragraph-color); /* USE VARIABLE */
     font-size: 1.1rem;
 }
 
 .key-points li i {
-    color: #4CAF50;
+    color: var(--icon-color); /* USE VARIABLE */
     margin-right: 1rem;
     font-size: 1.2rem;
 }
@@ -659,8 +760,8 @@ nav .container {
 
 /* Footer */
 footer {
-    background: #333;
-    color: #fff;
+    background: var(--footer-bg); /* USE VARIABLE */
+    color: var(--footer-text); /* USE VARIABLE */
     padding: 60px 0 20px;
 }
 
@@ -672,7 +773,7 @@ footer {
 }
 
 .footer-section h3 {
-    color: #fff;
+    color: var(--footer-text); /* USE VARIABLE - should inherit but explicit is fine */
     margin-bottom: 1.5rem;
 }
 
@@ -685,14 +786,14 @@ footer {
 }
 
 .footer-section ul li a {
-    color: #fff;
+    color: var(--footer-text); /* USE VARIABLE */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-section ul li a:hover,
 .social-links a:hover {
-    color: #4CAF50;
+    color: var(--footer-link-hover); /* USE VARIABLE */
 }
 
 .social-links {
@@ -701,7 +802,7 @@ footer {
 }
 
 .social-links a {
-    color: #fff;
+    color: var(--footer-text); /* USE VARIABLE */
     font-size: 1.5rem;
     transition: color 0.3s ease;
 }
@@ -709,7 +810,7 @@ footer {
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color); /* USE VARIABLE */
 }
 
 /* Animations */
@@ -733,16 +834,17 @@ footer {
     }
 
     .nav-links {
-        display: none;
+        display: none; /* Controlled by JS for 'active' class */
         position: absolute;
-        top: 100%;
+        top: 100%; /* Full width of nav parent */
         left: 0;
         right: 0;
-        background: white;
+        background: var(--nav-bg); /* USE VARIABLE for themed background */
         padding: 1rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 10px var(--card-shadow); /* USE VARIABLE for themed shadow */
         flex-direction: column;
         text-align: center;
+        border-top: 1px solid var(--border-color); /* USE VARIABLE for themed border */
     }
 
     .nav-links.active {
@@ -884,142 +986,11 @@ footer {
     }
 }
 
-/* Business Benefits Section */
-.business-benefits {
-    padding: 80px 0;
-    background-color: #f9f9f9;
-}
-
-.business-benefits h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    color: #333;
-}
-
-.benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-}
-
-.benefit-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.benefit-card:hover {
-    transform: translateY(-5px);
-}
-
-.benefit-card i {
-    font-size: 2.5rem;
-    color: #4CAF50;
-    margin-bottom: 1.5rem;
-}
-
-.benefit-card h3 {
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.benefit-card p {
-    color: #666;
-    line-height: 1.6;
-}
-
-.impact-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin: 4rem 0;
-    text-align: center;
-}
-
-.stat-item {
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #4CAF50;
-    margin-bottom: 1rem;
-    display: block;
-}
-
-.stat-item p {
-    color: #666;
-    font-size: 1.1rem;
-}
-
-.key-points {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 3rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.key-points h3 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 2rem;
-}
-
-.key-points ul {
-    list-style: none;
-    padding: 0;
-}
-
-.key-points li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    color: #666;
-    font-size: 1.1rem;
-}
-
-.key-points li i {
-    color: #4CAF50;
-    margin-right: 1rem;
-    font-size: 1.2rem;
-}
-
-/* Mobile Responsiveness for Business Benefits */
-@media (max-width: 768px) {
-    .benefits-grid,
-    .impact-stats {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
-    }
-
-    .key-points {
-        margin: 0 1rem;
-        padding: 2rem;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-    }
-
-    .key-points li {
-        font-size: 1rem;
-    }
-}
 /* Custom text colors */
 .tap-blue {
-    color: #0066ff;
+    color: var(--logo-tap-blue) !important; /* USE VARIABLE and keep !important if needed */
 }
 
 .xx-orange {
-    color: #ff6600;
+    color: var(--logo-xx-orange) !important; /* USE VARIABLE and keep !important if needed */
 }
